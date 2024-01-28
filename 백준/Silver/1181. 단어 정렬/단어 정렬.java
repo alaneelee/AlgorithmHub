@@ -6,33 +6,51 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 public class Main {
 
     static void input() throws Exception {
         int T = scan.nextInt();
-        ArrayList<String> words = new ArrayList<>();
-        ArrayList<String> result = new ArrayList<>();
-        int maxWord = 0;
+        Set<String> words = new HashSet<>();
 
-        for(int i = 0; i < T; i++) {
+        for (int i = 0; i < T; i++) {
             words.add(scan.nextLine());
         }
 
-        Collections.sort(words);
+//        Collections.sort(words);
+//
+//        for(String word : words) {
+//            maxWord = Math.max(maxWord, word.length());
+//        }
+//
+//        for(int i = 1; i <= maxWord; i++) {
+//            for(String word : words) {
+//                if(word.length() == i && !result.contains(word)) {
+//                    result.add(word);
+//                    sb.append(word).append("\n");
+//                }
+//            }
+//        }
 
-        for(String word : words) {
-            maxWord = Math.max(maxWord, word.length());
-        }
+        ArrayList<String> arr = new ArrayList<>(words);
 
-        for(int i = 1; i <= maxWord; i++) {
-            for(String word : words) {
-                if(word.length() == i && !result.contains(word)) {
-                    result.add(word);
-                    sb.append(word).append("\n");
+        arr.sort(new Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                if (s1.length() == s2.length()) {
+                    return s1.compareTo(s2);
+                } else {
+                    return s1.length() - s2.length();
                 }
             }
+        });
+
+        for (String word : arr) {
+            sb.append(word).append("\n");
         }
 
         print();
@@ -43,6 +61,7 @@ public class Main {
     }
 
     static class FastReader {
+
         BufferedReader br;
         StringTokenizer st;
 
