@@ -4,8 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -14,23 +14,18 @@ public class Main {
         int N = scan.nextInt();
         int M = scan.nextInt();
         int count = 0;
+        String word = "";
 
-        List<String> firstSet = new ArrayList<>();
-        List<String> secondSet = new ArrayList<>();
+        Map<String, Integer> map = new HashMap<>();
 
         for(int i = 0; i < N; i++) {
-            firstSet.add(scan.nextLine());
+            word = scan.nextLine();
+            map.put(word, 0);
         }
 
         for(int i = 0; i < M; i++) {
-            secondSet.add(scan.nextLine());
-        }
-
-        for(String firstContents : firstSet) {
-            for(String secondContents : secondSet) {
-                if(firstContents.equals(secondContents)) {
-                    count++;
-                }
+            if (map.containsKey(scan.nextLine())) {
+                count++;
             }
         }
 
