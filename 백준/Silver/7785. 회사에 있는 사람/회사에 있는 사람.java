@@ -6,11 +6,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.stream.Collectors;
 
 public class Main {
 
@@ -32,9 +30,9 @@ public class Main {
 
         List<String> keySet = new ArrayList<>(inCompany.keySet());
 
-        List<String> results = keySet.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
+        Collections.sort(keySet, Collections.reverseOrder());
 
-        for(String result : results) {
+        for(String result : keySet) {
             sb.append(result).append("\n");
         }
 
