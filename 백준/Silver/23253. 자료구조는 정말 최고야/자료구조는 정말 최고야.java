@@ -26,7 +26,7 @@ public class Main {
 
                 if(pre < cur) {
                     flag = false;
-
+                    break;
                 } else {
                     pre = cur;
                 }
