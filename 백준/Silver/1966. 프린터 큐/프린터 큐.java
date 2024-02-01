@@ -5,46 +5,52 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 public class Main {
 
     static void input() throws Exception {
         int T = scan.nextInt();
-        
+
         while(T > 0) {
             Deque<ArrayList<Integer>> q = new LinkedList<>();
 
             int N = scan.nextInt();
             int target = scan.nextInt();
             int max = 0;
-            boolean flag = true;
             int cnt = 0;
+            int idx = 0;
+            int input;
+            boolean flag = true;
+
+            List<Integer> priority = new ArrayList<>();
 
             for(int i = 0; i < N; i++) {
                 ArrayList<Integer> row = new ArrayList<>();
+                input = scan.nextInt();
                 row.add(i);
-                row.add(scan.nextInt());
+                row.add(input);
                 q.add(row);
+                priority.add(input);
             }
+            Collections.sort(priority, Collections.reverseOrder());
 
-            for(ArrayList<Integer> num : q) {
-                max = Math.max(max, num.get(1));
-            }
+            priority.add(-10);
+
+            max = priority.get(0);
 
             while(flag) {
                 if (q.getFirst().get(0) == target && q.getFirst().get(1) == max) {
                     flag = false;
                 }
                 if (q.getFirst().get(1) == max) {
-                    max = 0;
+                    max = priority.get(++idx);
                     q.removeFirst();
                     cnt++;
-                    for(ArrayList<Integer> num : q) {
-                        max = Math.max(max, num.get(1));
-                    }
                 } else {
                     q.addLast(q.removeFirst());
                 }
