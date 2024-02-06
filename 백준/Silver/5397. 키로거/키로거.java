@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
+import java.util.ListIterator;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
@@ -14,45 +15,83 @@ public class Main {
         int T = scan.nextInt();
 
         for (int i = 0; i < T; i++) {
+
+            LinkedList<Character> linklist = new LinkedList<>();
+
+            ListIterator<Character> list = linklist.listIterator();
+
             String pwd = scan.nextLine();
 
-            Stack<Character> stack1 = new Stack<>();
-            Stack<Character> stack2 = new Stack<>();
-
-            for(char c : pwd.toCharArray()) {
+            for (char c : pwd.toCharArray()) {
                 switch (c) {
                     case '<':
-                        if (!stack1.isEmpty()) {
-                            stack2.push(stack1.pop());
+                        if (list.hasPrevious()) {
+                            list.previous();
                         }
                         break;
                     case '>':
-                        if (!stack2.isEmpty()) {
-                            stack1.push(stack2.pop());
+                        if (list.hasNext()) {
+                            list.next();
                         }
                         break;
                     case '-':
-                        if (!stack1.isEmpty()) {
-                            stack1.pop();
+                        if (list.hasPrevious()) {
+                            list.previous();
+                            list.remove();
                         }
                         break;
                     default:
-                        stack1.push(c);
-                        break;
+                        list.add(c);
                 }
             }
 
-            while(!stack2.isEmpty()) {
-                stack1.push(stack2.pop());
-            }
-
-            for(char c : stack1) {
+            for (char c : linklist) {
                 sb.append(c);
             }
             sb.append('\n');
-
         }
         print();
+
+//        for (int i = 0; i < T; i++) {
+//            String pwd = scan.nextLine();
+//
+//            Stack<Character> stack1 = new Stack<>();
+//            Stack<Character> stack2 = new Stack<>();
+//
+//            for(char c : pwd.toCharArray()) {
+//                switch (c) {
+//                    case '<':
+//                        if (!stack1.isEmpty()) {
+//                            stack2.push(stack1.pop());
+//                        }
+//                        break;
+//                    case '>':
+//                        if (!stack2.isEmpty()) {
+//                            stack1.push(stack2.pop());
+//                        }
+//                        break;
+//                    case '-':
+//                        if (!stack1.isEmpty()) {
+//                            stack1.pop();
+//                        }
+//                        break;
+//                    default:
+//                        stack1.push(c);
+//                        break;
+//                }
+//            }
+//
+//            while(!stack2.isEmpty()) {
+//                stack1.push(stack2.pop());
+//            }
+//
+//            for(char c : stack1) {
+//                sb.append(c);
+//            }
+//            sb.append('\n');
+//
+//        }
+//        print();
 //            String pwd = scan.nextLine();
 //            LinkedList<Character> result = new LinkedList<>();
 //            int idx = 0;
