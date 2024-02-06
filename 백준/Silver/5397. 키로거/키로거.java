@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
+import java.util.Stack;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -14,41 +15,80 @@ public class Main {
 
         for (int i = 0; i < T; i++) {
             String pwd = scan.nextLine();
-            LinkedList<Character> result = new LinkedList<>();
-            int idx = 0;
 
-            for (char c : pwd.toCharArray()) {
+            Stack<Character> stack1 = new Stack<>();
+            Stack<Character> stack2 = new Stack<>();
+
+            for(char c : pwd.toCharArray()) {
                 switch (c) {
                     case '<':
-                        if (idx > 0) {
-                            idx--;
+                        if (!stack1.isEmpty()) {
+                            stack2.push(stack1.pop());
                         }
                         break;
                     case '>':
-                        if (idx < result.size()) {
-                            idx++;
+                        if (!stack2.isEmpty()) {
+                            stack1.push(stack2.pop());
                         }
                         break;
                     case '-':
-                        if (idx > 0) {
-                            result.remove(idx - 1);
-                            idx--;
+                        if (!stack1.isEmpty()) {
+                            stack1.pop();
                         }
                         break;
                     default:
-                        result.add(idx, c);
-                        idx++;
+                        stack1.push(c);
+                        break;
                 }
             }
 
-            for (char c : result) {
-                sb.append(c);
+            while(!stack2.isEmpty()) {
+                stack1.push(stack2.pop());
             }
 
+            for(char c : stack1) {
+                sb.append(c);
+            }
             sb.append('\n');
 
         }
         print();
+//            String pwd = scan.nextLine();
+//            LinkedList<Character> result = new LinkedList<>();
+//            int idx = 0;
+//
+//            for (char c : pwd.toCharArray()) {
+//                switch (c) {
+//                    case '<':
+//                        if (idx > 0) {
+//                            idx--;
+//                        }
+//                        break;
+//                    case '>':
+//                        if (idx < result.size()) {
+//                            idx++;
+//                        }
+//                        break;
+//                    case '-':
+//                        if (idx > 0) {
+//                            result.remove(idx - 1);
+//                            idx--;
+//                        }
+//                        break;
+//                    default:
+//                        result.add(idx, c);
+//                        idx++;
+//                }
+//            }
+//
+//            for (char c : result) {
+//                sb.append(c);
+//            }
+//
+//            sb.append('\n');
+//
+//        }
+//        print();
     }
 
     static void print() {
