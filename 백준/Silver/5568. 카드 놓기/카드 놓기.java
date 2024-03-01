@@ -4,65 +4,44 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
 
 public class Main {
+    static int n, k;
+    static int[] arr;
+    static boolean[] visited;
+    static Set<String> hashset = new HashSet<>();
 
     static void input() throws Exception {
-        int n = scan.nextInt();
-        int k = scan.nextInt();
-        List<String> nums = new ArrayList<>();
-        Set<String> set = new HashSet<>();
+        n = scan.nextInt();
+        k = scan.nextInt();
+        arr = new int[n];
+        visited = new boolean[n];
 
-        for(int i = 0; i < n; i++) {
-            nums.add(scan.nextLine());
+        for (int i = 0; i < n; i++) {
+           arr[i] = scan.nextInt();
         }
 
-        switch(k) {
-            case 2:
-                for (int i = 0; i < nums.size(); i++) {
-                    for(int j = 0; j < nums.size(); j++) {
-                        if (i == j) continue;
-                        set.add(nums.get(i) + nums.get(j));
-                    }
-                }
-                break;
-            case 3:
-                for (int i = 0; i < nums.size(); i++) {
-                    for(int j = 0; j < nums.size(); j++) {
-                        if (i == j) continue;
-                        for(int l = 0; l < nums.size(); l++) {
-                            if (i == l) continue;
-                            if (j == l) continue;
-                            set.add(nums.get(i) + nums.get(j) + nums.get(l));
-                        }
-                    }
-                }
-                break;
-            case 4:
-                for (int i = 0; i < nums.size(); i++) {
-                    for(int j = 0; j < nums.size(); j++) {
-                        if (i == j) continue;
-                        for(int l = 0; l < nums.size(); l++) {
-                            if (i == l) continue;
-                            if (j == l) continue;
-                            for(int m = 0; m < nums.size(); m++) {
-                                if (i == m) continue;
-                                if (j == m) continue;
-                                if (l == m) continue;
-                                set.add(nums.get(i) + nums.get(j) + nums.get(l) + nums.get(m));
-                            }
-                        }
-                    }
-                }
-                break;
+        makePermutations(0, "");
+
+        System.out.println(hashset.size());
+    }
+
+    static void makePermutations(int count, String current) {
+        if (count == k) {
+            hashset.add(current);
+            return;
         }
 
-        System.out.println(set.size());
+        for (int i = 0; i < n; i++) {
+            if (!visited[i]) {
+                visited[i] = true;
+                makePermutations(count + 1, current + arr[i]);
+                visited[i] = false;
+            }
+        }
     }
 
     static void print() {
